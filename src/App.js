@@ -1,26 +1,68 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { Login } from "./components/Login";
+import { SignIn } from "./components/SignIn";
+import { MapPage } from "./components/Map";
+import { Profile } from "./components/Profile";
+import { Header } from "./components/Header";
+import { AuthContext } from "./components/Context";
+import { Logo } from "loft-taxi-mui-theme";
+const menu = [
+  {
+    path: "map",
+    name: "Карта",
+  },
+  {
+    path: "profile",
+    name: "Профиль",
+  },
+  {
+    path: "signout",
+    name: "Выйти",
+  },
+];
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App () {
+  const [currentPath, setCurrentPath] = React.useState("login");
+  const {authorized, logout} =  React.useContext(AuthContext);
+  const changePath = (path) => {
+    //console.log("path", path);
+    setCurrentPath(path);
+    if (path === "signout"){
+       setCurrentPath("login");
+       logout();
+    }
+  };
+
+  const renderContent = () => {
+    if (authorized) {
+     // console.log("authorized", currentPath);
+      switch (currentPath) {
+        case "map":
+          return <MapPage />;
+        case "profile":
+          return <Profile />;
+        
+        default:
+      }
+    } else {
+     // console.log("unauthorized", currentPath);
+      switch (currentPath) {
+        case "signin":
+          return <SignIn changePath={changePath} />;
+        default:
+          return <Login changePath={changePath} />;
+      }
+    }
+  };
+
+      return (
+        <>
+          <Logo animated />
+          {authorized && (<Header changePath={changePath} items={menu}></Header>)}
+          {renderContent()}
+        </>
+      );
 }
 
 export default App;

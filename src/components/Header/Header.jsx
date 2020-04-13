@@ -2,15 +2,14 @@ import React from 'react';
 
 export class Header extends React.Component  {
     render() { 
+        const {items, changePath} = this.props;
         return (
             <header>
-
-            {this.props.items.map((item) =>(
-              
-              <button key={item.path} onClick={() => this.props.changePath(item.path)} >{item.name}</button>
-            )
-            )}
-    
+              {items.map((item) =>(
+                
+                <button key={item.path} onClick={() => changePath(item.path)} >{item.name}</button>
+              )
+              )}
           </header>
         )
       }
