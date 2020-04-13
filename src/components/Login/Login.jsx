@@ -50,6 +50,5 @@ export function Login(props) {
 }
 
 Login.propTypes = {
-    password:PropTypes.string,
-    email:PropTypes.string
+    changePath:PropTypes.func.isRequired,
   };

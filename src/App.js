@@ -26,7 +26,7 @@ function App () {
   const [currentPath, setCurrentPath] = React.useState("login");
   const {authorized, logout} =  React.useContext(AuthContext);
   const changePath = (path) => {
-    //console.log("path", path);
+    
     setCurrentPath(path);
     if (path === "signout"){
        setCurrentPath("login");
@@ -36,7 +36,7 @@ function App () {
 
   const renderContent = () => {
     if (authorized) {
-     // console.log("authorized", currentPath);
+      console.log("authorized", currentPath);
       switch (currentPath) {
         case "map":
           return <MapPage />;
@@ -44,9 +44,9 @@ function App () {
           return <Profile />;
         
         default:
+          return null;
       }
-    } else {
-     // console.log("unauthorized", currentPath);
+    } else {     
       switch (currentPath) {
         case "signin":
           return <SignIn changePath={changePath} />;
