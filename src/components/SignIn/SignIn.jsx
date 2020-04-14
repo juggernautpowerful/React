@@ -1,54 +1,116 @@
-import React from 'react';
-import Input from "@material-ui/core/Input";
-import Button from "@material-ui/core/Button";
+import React from "react";
+import {
+  Button,
+  Input,
+  FormLabel,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 
-export class SignIn extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            email:"",
-            password:"",
-            firstname:"",
-            lastname:""
-        }
-    };
+export class SignIn extends React.Component {
+  state = {
+    email: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+  };
 
-    handlerLogin = () => {
-        const {changePath} = this.props;
-        changePath("login");
-    };
+  handlerLogin = () => {
+    const { changePath } = this.props;
+    changePath("login");
+  };
 
-    handlerSubmit = (e) => {
-        e.preventDefault();
+  handlerSubmit = (e) => {
+    e.preventDefault();
 
-        const {email, password, firstname, lastname} = this.state;
-        const {changePath} = this.props;
+    const { email, password, firstname, lastname } = this.state;
+    const { changePath } = this.props;
 
-        if(email && password && firstname && lastname){
-            changePath("profile");
-        }
-    };
-
-    handlerChange =  (e) => {
-        this.setState({[e.target.name]:e.target.value});
-    };
-
-    render(){
-        const {email, password, firstname, lastname} = this.state;
-        return(
-            <>
-                <h1>Войти</h1>
-                <p>Уже зарегестрированы? <label 
-                    onClick={this.handlerLogin}
-                    >Войти</label></p>
-                <form onSubmit={this.handlerSubmit}>  
-                    <Input type="text" name="email" value={email} onChange={this.handlerChange} />
-                    <Input type="text" name="firstname" value={firstname} onChange={this.handlerChange} />
-                    <Input type="text" name="lastname" value={lastname} onChange={this.handlerChange}/>
-                    <Input type="text" name="password" value={password} onChange={this.handlerChange}/>
-                    <Button color="primary" type="submit">Войти</Button>
-                </form>
-            </>
-        );
+    if (email && password && firstname && lastname) {
+      changePath("profile");
     }
+  };
+
+  handlerChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  render() {
+    const { email, password, firstname, lastname } = this.state;
+
+    return (
+      <>
+        <form onSubmit={this.handlerSubmit} style={{ width: "100%" }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Typography
+                align="left"
+                variant="h4"
+                component="h1"
+                style={{ marginBottom: "30px" }}
+              >
+                Регистрация
+              </Typography>
+              <Typography align="left" variant="body1" component="p">
+                Уже зарегистрированы?{" "}
+                <FormLabel color="secondary" onClick={this.handlerLogin}>
+                  Войти
+                </FormLabel>
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                type="text"
+                name="email"
+                placeholder="email"
+                value={email}
+                onChange={this.handlerChange}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Input
+                type="text"
+                name="firstname"
+                placeholder="имя"
+                value={firstname}
+                onChange={this.handlerChange}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Input
+                type="text"
+                name="lastname"
+                placeholder="фамилия"
+                value={lastname}
+                onChange={this.handlerChange}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Input
+                type="text"
+                name="password"
+                placeholder="пароль"
+                value={password}
+                onChange={this.handlerChange}
+                style={{ width: "100%" }}
+              />
+            </Grid>
+            <Grid item xs={12} style={{ marginTop: "10px" }}>
+              <Button
+                variant="contained"
+                ailgn="right"
+                color="primary"
+                type="submit"
+              >
+                Войти
+              </Button>
+            </Grid>
+          </Grid>
+        </form>
+      </>
+    );
+  }
 }

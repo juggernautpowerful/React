@@ -20,7 +20,7 @@ export class MapPage extends React.Component {
     render() {
       const style = {
         position: 'absolute',
-        top: '160px',
+        top: '70px',
         bottom: 0,
         width: '100%'
       };
