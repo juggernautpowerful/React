@@ -44,6 +44,7 @@ class Profile extends React.PureComponent {
 		}
 	}
 	componentDidUpdate(prevProp) {
+		console.log("componentDidUpdate.props ", this.props);
 		let isCompareProps =
 			JSON.stringify(prevProp.cardData) === JSON.stringify(this.props.cardData);
 		if (!isCompareProps) {

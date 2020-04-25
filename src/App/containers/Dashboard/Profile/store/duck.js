@@ -15,7 +15,7 @@ export const actions = {
 };
 
 const initialState = {
-	isUpdatedCart: false,
+	isUpdatedCard: false,
 	isCard: isCard,
 	isLoading: false,
 	data: {},
@@ -27,26 +27,27 @@ export const cardReducer = (state = initialState, action) => {
 			if (isCard) {
 				return {
 					isCard: true,
+					isUpdatedCard: false,
 					...state,
 				};
 			}
 			return state;
 		case constants.CARD_SAVE_REQUEST:
-			return { ...state, isLoading: true };
+			return { ...state, isLoading: true, isUpdatedCard: false };
 		case constants.CARD_SAVE_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
-				isUpdatedCart: true,
+				isUpdatedCard: true,
 				data: action.payload,
 			};
 		case constants.CARD_GET_REQUEST:
-			return { ...state, isLoading: true };
+			return { ...state, isLoading: true, isUpdatedCard: false };
 		case constants.CARD_GET_SUCCESS:
 			localStorage.setItem("isCard", JSON.stringify(true));
-			return { ...state, isLoading: false, isCard: true, isUpdatedCart: false, data: action.payload };
+			return { ...state, isLoading: false, isCard: true, isUpdatedCard: false, data: action.payload };
 		case constants.CARD_FAILURE:
-			return { ...state, isLoading: false, isUpdatedCart: false };
+			return { ...state, isLoading: false, isUpdatedCard: false };
 
 		default:
 			return state;

@@ -8,9 +8,6 @@ const getToken = (state) => tokenSelector(state);
 
 export function* fetchCardSaveWorker(action) {
 	const { payload } = action;
-	let g =  yield select(getToken);
-	yield console.log("tokensaveworker ", g);
-	//delete payload.id;
 	payload.token = yield select(getToken);
 	yield console.log("actionSaveWorker ", action);
 	const cardSave = () => api.post("/card", payload);
