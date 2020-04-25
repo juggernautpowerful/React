@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { Map } from "./Map";
 import { Profile } from "./Profile";
+// import { connect } from "react-redux";
+// import { actions } from "./Profile/store/duck";
 
-export const Dashboard = () => {
+// const mapDispatchToProps = (dispatch) => ({
+// 	checkIsCard: () => dispatch(actions.checkIsCard()),
+// });
+
+export const Dashboard = (props) => {
+	// useEffect(() => {
+	// 	const { checkIsCard } = props;
+	// 	checkIsCard();
+	// });
+
 	return (
-		<div>
+		<>
 			<Switch>
 				<Route path="/dashboard/profile" component={Profile}></Route>
 				<Route path="/dashboard/map" component={Map}></Route>
 			</Switch>
-		</div>
+		</>
 	);
 };
+
+// const connectedDashboard = connect(null, mapDispatchToProps)(Dashboard);
+// export { connectedDashboard as Dashboard };

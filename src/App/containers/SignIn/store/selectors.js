@@ -1,0 +1,1 @@
+ export const isSubmitedSelector = (state) => state.signinReducer.isSubmited;
