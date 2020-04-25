@@ -22,7 +22,7 @@ const initialState = {
 export const loginReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case constants.CHECK_IS_LOGIN:
-			console.log("isAuth ",isAuth);
+			console.log("isAuth ", isAuth);
 			if (isAuth) {
 				return {
 					isAuth: true,
@@ -35,15 +35,20 @@ export const loginReducer = (state = initialState, action) => {
 		case constants.LOGIN_SUCCESS:
 			localStorage.setItem("isAuth", JSON.stringify(true));
 			localStorage.setItem("tokenAuth", action.payload.token);
-			
-			return { ...state, isLoading: false, data: action.payload, isAuth: true, tokenAuth: action.payload.token };
+
+			return {
+				...state,
+				isLoading: false,
+				data: action.payload,
+				isAuth: true,
+				tokenAuth: action.payload.token,
+			};
 		case constants.LOGIN_FAILURE:
 			return { ...state, isLoading: false, isAuth: false, tokenAuth: "" };
 		case constants.LOGOUT:
 			localStorage.setItem("isAuth", JSON.stringify(false));
 			localStorage.setItem("tokenAuth", "");
-			//console.log("LOGOUT: ", state);
-			return { ...state, isLoading: false, isAuth: false, tokenAuth:"" };
+			return { ...state, isLoading: false, isAuth: false, tokenAuth: "" };
 		default:
 			return state;
 	}

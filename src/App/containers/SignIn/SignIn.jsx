@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { actions } from "./store/duck";
 import { isSubmitedSelector } from "./store/selectors";
+import { isAuthSelector } from "../Login/store/selectors";
 import { Redirect } from "react-router-dom";
 
 import {
@@ -17,6 +18,7 @@ import { Logo } from "loft-taxi-mui-theme";
 
 const mapStateToProps = (state) => ({
 	isSubmited: isSubmitedSelector(state),
+	isAuth: isAuthSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -27,8 +29,8 @@ class SignIn extends React.Component {
 	state = {
 		email: "",
 		password: "",
-		firstname: "",
-		lastname: "",
+		name: "",
+		surname: "",
 	};
 
 	handlerSubmit = (e) => {
@@ -42,11 +44,12 @@ class SignIn extends React.Component {
 	};
 
 	render() {
-		const { email, password, firstname, lastname } = this.state;
-		const { isSubmited } = this.props;
-		console.log("isSubmited: ", isSubmited);
-		if (isSubmited) {
-			return <Redirect path="/login" to="/dashboard/map" />;
+		const { email, password, name, surname } = this.state;
+		 //const { isSubmited } = this.props;
+		 const { isAuth } = this.props;
+		// console.log("isSubmited: ", isSubmited);
+		if (isAuth) {
+			return <Redirect path="/signin" to="/dashboard/map" />;
 		} else {
 			return (
 				<>
@@ -107,9 +110,9 @@ class SignIn extends React.Component {
 											<Grid item xs={6}>
 												<Input
 													type="text"
-													name="firstname"
+													name="name"
 													placeholder="имя"
-													value={firstname}
+													value={name}
 													onChange={this.handlerChange}
 													style={{ width: "100%" }}
 												/>
@@ -117,9 +120,9 @@ class SignIn extends React.Component {
 											<Grid item xs={6} style={{ marginBottom: "30px" }}>
 												<Input
 													type="text"
-													name="lastname"
+													name="surname"
 													placeholder="фамилия"
-													value={lastname}
+													value={surname}
 													onChange={this.handlerChange}
 													style={{ width: "100%" }}
 												/>

@@ -17,7 +17,7 @@ export function* fetchLogInWorker(action) {
 			yield put(actions.logInFailure());
 		}
 	} catch (error) {
-		yield console.log("errorLogin", error);
+		//yield console.log("errorLogin", error);
 		yield put(actions.logInFailure());
 	}
 }

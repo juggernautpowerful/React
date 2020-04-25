@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { actions } from "./store/duck";
 import {
 	isUpdatedCardSelector,
-	cardDataSelector,
-	isCardSelector,
+	cardDataSelector
 } from "./store/selectors";
 import { Link } from "react-router-dom";
 import {
@@ -21,8 +20,7 @@ import { MCIcon } from "loft-taxi-mui-theme";
 
 const mapStateToProps = (state) => ({
 	isUpdatedCard: isUpdatedCardSelector(state),
-	cardData: cardDataSelector(state),
-	isCard: isCardSelector(state),
+	cardData: cardDataSelector(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -38,13 +36,10 @@ class Profile extends React.PureComponent {
 		cvc: "",
 	};
 	componentDidMount() {
-		if (this.props.isCard) {
-			//console.log("this.propsthis.props ", this.props);
-			this.props.cardGet();
-		}
+		this.props.cardGet();	
 	}
 	componentDidUpdate(prevProp) {
-		console.log("componentDidUpdate.props ", this.props);
+		//console.log("componentDidUpdate.props ", this.props);
 		let isCompareProps =
 			JSON.stringify(prevProp.cardData) === JSON.stringify(this.props.cardData);
 		if (!isCompareProps) {
@@ -71,8 +66,8 @@ class Profile extends React.PureComponent {
 	render() {
 		const { isUpdatedCard } = this.props;
 		const { cardNumber, cardName, expiryDate, cvc } = this.state;
-		console.log("this.props ", this.props);
-		console.log("isUpdatedCard ", isUpdatedCard);
+		// console.log("this.props ", this.props);
+		// console.log("isUpdatedCard ", isUpdatedCard);
 		if (isUpdatedCard) {
 			return (
 				<>
