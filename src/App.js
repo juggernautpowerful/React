@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { isAuthSelector } from "./App/containers/Login/store/selectors";
 import { Route, Redirect, Switch } from "react-router-dom";
 import { PrivateRoute } from "./App/components/AppRouter/PrivateRoute";
 import AppRouter from "./App/components/AppRouter";
 import Login from "./App/containers/Login";
 import { SignIn } from "./App/containers/SignIn";
-import { actions } from "./App/containers/Login/store/duck";
+import { actions } from "./App/store/Login";
+import { isAuthSelector } from "./App/store/Login";
 
 const mapStateToProps = (state) => ({
 	isAuth: isAuthSelector(state),

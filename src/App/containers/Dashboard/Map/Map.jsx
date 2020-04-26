@@ -7,8 +7,8 @@ export class Map extends React.Component {
 			"pk.eyJ1Ijoic2tpcHBlcnUiLCJhIjoiY2s4c3NoNDk0MDJoYzNubmRwNmRkd29maCJ9.UeNSNHUBNRtev-eTiY4x2A";
 		this.map = new mapboxgl.Map({
 			container: this.mapContainer,
-			center: [30.233319, 59.942138],
-			zoom: 10,
+			center: [30.248998403385492, 59.950940940256835],
+			zoom: 15,
 			style: "mapbox://styles/mapbox/streets-v9",
 		});
 	}
@@ -25,6 +25,8 @@ export class Map extends React.Component {
 			right: 0,
 			bottom: 0,
 			width: "100%",
+			height: `${window.innerHeight - 100}px`
+
 		};
 
 		return (

@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actions } from "./store/duck";
+import { actions } from "../../store/Login";
 import { Redirect } from "react-router-dom";
-import { isAuthSelector } from "./store/selectors";
+import { isAuthSelector } from "../../store/Login";
 
 import {
 	Button,

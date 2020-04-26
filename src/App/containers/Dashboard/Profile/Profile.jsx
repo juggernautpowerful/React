@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actions } from "./store/duck";
+import { actions } from "../../../store/Card";
 import {
 	isUpdatedCardSelector,
 	cardDataSelector
-} from "./store/selectors";
+} from "../../../store/Card";
 import { Link } from "react-router-dom";
 import {
 	Button,

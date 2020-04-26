@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { actions } from "../../Login/store/duck";
+//import { actions } from "../../Login/store/duck";
+import { actions } from "../../../store/Login";
 
 import { Logo } from "loft-taxi-mui-theme";
 import { NavLink } from "react-router-dom";

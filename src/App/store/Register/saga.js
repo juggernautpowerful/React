@@ -1,8 +1,10 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import * as constants from "./constants";
 import { actions } from "./duck";
-import { actions as loginActons } from "../../Login/store/duck";
-import { api } from "../../../services/api";
+//import { actions as loginActons } from "../../Login/store/duck";
+import { actions as loginActons } from "../../store/Login";
+//import { api } from "../../../services/api";
+import { api } from "../../services/api";
 
 export function* fetchSignInWorker(action) {
 	//yield console.log(action);

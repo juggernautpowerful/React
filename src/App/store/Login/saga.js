@@ -1,7 +1,7 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import * as constants from "./constants";
 import { actions } from "./duck";
-import { api } from '../../../services/api';
+import { api } from '../../services/api';
 
 export function* fetchLogInWorker(action) {
 	const { payload } = action;

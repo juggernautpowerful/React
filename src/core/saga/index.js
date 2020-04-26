@@ -1,11 +1,11 @@
 import { all } from "redux-saga/effects";
-import { watchLogInSaga } from "../../App/containers/Login/store/saga";
-import { watchSignInSaga } from "../../App/containers/SignIn/store/saga";
+import { watchLogInSaga as authorizationSaga  } from "../../App/store/Login";
+import { watchSignInSaga as registrationSaga  } from "../../App/store/Register";
 import {
 	watchCardSaveSaga,
 	watchCardGetSaga
-} from "../../App/containers/Dashboard/Profile/store/saga";
+} from "../../App/store/Card";
 
 export default function* rootSaga() {
-	yield all([watchLogInSaga(), watchCardSaveSaga(), watchCardGetSaga(), watchSignInSaga()]);
+	yield all([authorizationSaga(), watchCardSaveSaga(), watchCardGetSaga(), registrationSaga()]);
 }

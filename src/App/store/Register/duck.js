@@ -14,7 +14,7 @@ const initialState = {
 	data: {},
 };
 
-export const signinReducer = (state = initialState, action) => {
+export const registerReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case constants.REGISTER_REQUEST:
 			return { ...state, isLoading: true };
