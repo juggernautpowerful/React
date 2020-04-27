@@ -9,17 +9,18 @@ export const actions = {
 };
 
 const initialState = {
-	isSubmited: false,
 	isLoading: false,
 	data: {},
 };
 
 export const routeReducer = (state = initialState, action) => {
 	switch (action.type) {
+		case constants.ROUTE_CLEAR:
+			return { ...state, isLoading: false , data: {}};
 		case constants.ROUTE_REQUEST:
 			return { ...state, isLoading: true };
 		case constants.ROUTE_SUCCESS:
-			return { ...state, isLoading: false, data: action.payload, isSubmited: true };
+			return { ...state, isLoading: false, data: action.payload };
 		case constants.ROUTE_FAILURE:
 			return { ...state, isLoading: false };
 		default:

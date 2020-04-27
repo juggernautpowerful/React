@@ -5,7 +5,8 @@ import { api } from "../../services/api";
 
 export function* fetchRouteWorker(action) {
 	const { payload } = action;
-	const getRoute = () => api.post("/route", payload);
+	
+	const getRoute = () => api.get(`/route?address1=${payload[0]}&address2=${payload[1]}`);
 
 	try {
 		const result = yield call(getRoute);

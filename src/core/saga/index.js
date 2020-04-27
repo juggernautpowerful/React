@@ -5,7 +5,7 @@ import { watchCardSaveSaga, watchCardGetSaga } from "../../App/store/Card";
 import { watchAddressListSaga as addressListSaga } from "../../App/store/AddressList";
 import { watchRouteSaga as routeSaga } from "../../App/store/Route";
 
-export default function* rootSaga() {
+export  function* rootSaga() {
 	yield all([
 		authorizationSaga(),
 		watchCardSaveSaga(),

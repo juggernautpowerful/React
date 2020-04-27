@@ -17,8 +17,7 @@ export const addressesReducer = (state = initialState, action) => {
 		case constants.ADDRESS_LIST_REQUEST:
 			return { ...state, isLoading: true };
 		case constants.ADDRESS_LIST_SUCCESS:
-			console.log("???",action.payload);
-			return { ...state, isLoading: false, data: action.payload.data };
+			return { ...state, isLoading: false, data: action.payload };
 		case constants.ADDRESS_LIST_FAILURE:
 			return { ...state, isLoading: false };
 		default:

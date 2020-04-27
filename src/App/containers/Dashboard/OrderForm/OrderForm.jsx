@@ -1,52 +1,69 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
-import {
-	actions,
-	IsAddressesSelector,
-	AddressListSelector,
-} from "../../../store/AddressList";
+import { AddressListSelector } from "../../../store/AddressList";
 import { actions as routeActions } from "../../../store/Route";
 
 import Select from "react-select";
 import { Button, Grid, Typography, Paper } from "@material-ui/core";
 
-const addressesfake = [
-	"Пулково (LED)",
-	"Шаверма на Невском",
-	"Инфекционная больница им. Боткина",
-	"Волковское кладбище",
-];
-const options = [
-	{ value: "chocolate", label: "Chocolate" },
-	{ value: "strawberry", label: "Strawberry" },
-	{ value: "vanilla", label: "Vanilla" },
-];
+
+
+const removeFromArray = (name, array) => {
+	return array.filter((el) => {
+		if (el.value !== name) return el;
+	});
+};
+
 const OrderForm = (props) => {
-	const { fetchAddressList, isAddresses } = props;
-
-	if(!props.isAddresses){
-		fetchAddressList();
-		console.log(">>>>>> is addresses", props.isAddresses);
-	}
-
-	console.log("<<<<< is addresses", props.addresses);
-	console.log("!!!!! is addresses", props.isAddresses);
-
 	useEffect(() => {
-		
-		console.log("props ", props);
-		
-			//fetchAddressList();
-		
-	}, [false]);
+		console.log("useEffect props.addresses ", props.addresses);
+		const list = props.addresses
+			? props.addresses.map((item) => ({
+					value: item,
+					label: item,
+			  }))
+			: [];
 
-	const handleChange = () => {};
+		if (list.length > 0 && fromList.length === 0) {
+			setFromList(list);
+		}
+		if (list.length > 0 && toList.length === 0) {
+			setToList(list);
+		}
+	});
+	console.log("OrderForm props ", props);
+	
+	const [fromSelected, setFrom] = React.useState("");
+	const [toSelected, setTo] = React.useState("");
+	const [toList, setFromList] = React.useState(
+		props.addresses ? props.addresses : ""
+	);
+	const [fromList, setToList] = React.useState(
+		props.addresses ? props.addresses : ""
+	);
+	console.log("toList ", toList);
+	const handleChange = (event, props) => {
+		const { label } = event;
+		const { name } = props;
+		switch (name) {
+			case "from":
+				setFrom(label);
+				setFromList(removeFromArray(label, fromList));
+				break;
+			case "to":
+				setTo(label);
+				setToList(removeFromArray(label, toList));
+				break;
+			default:
+				break;
+		}
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		//console.log("props ", props);
-		//props.getRoute();
+
+		props.getRoute([fromSelected, toSelected]);
 	};
 
 	return (
@@ -71,7 +88,7 @@ const OrderForm = (props) => {
 					<Grid item xs={12} style={{ marginBottom: "40px" }}>
 						<Select
 							name="from"
-							options={options}
+							options={fromList}
 							placeholder="Выберите адрес отправления"
 							onChange={handleChange}
 						/>
@@ -79,7 +96,7 @@ const OrderForm = (props) => {
 					<Grid item xs={12} style={{ marginBottom: "40px" }}>
 						<Select
 							name="to"
-							options={options}
+							options={toList}
 							placeholder="Выберите адрес прибытия"
 							onChange={handleChange}
 						/>
@@ -97,11 +114,9 @@ const OrderForm = (props) => {
 
 const mapStateToProps = (state) => ({
 	addresses: AddressListSelector(state),
-	isAddresses: IsAddressesSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchAddressList: () => dispatch(actions.fetchAddressList()),
 	getRoute: (value) => dispatch(routeActions.getRoute(value)),
 });
 
