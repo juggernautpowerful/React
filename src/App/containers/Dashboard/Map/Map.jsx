@@ -1,6 +1,6 @@
 import React from "react";
 import mapboxgl from "mapbox-gl";
-
+import {OrderForm} from "../OrderForm"
 export class Map extends React.Component {
 	componentDidMount() {
 		mapboxgl.accessToken =
@@ -30,9 +30,15 @@ export class Map extends React.Component {
 		};
 
 		return (
+			<>
+{/* <OrderForm map={this.map} /> */}
+
+
 			<div style={{ position: "relative", zIndex: "-10" }}>
 				<div style={style} ref={(el) => (this.mapContainer = el)} />
-			</div>
+				
+			</div><OrderForm />
+			</>
 		);
 	}
 }

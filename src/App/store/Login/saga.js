@@ -1,6 +1,7 @@
 import { takeLatest, call, put } from "redux-saga/effects";
 import * as constants from "./constants";
 import { actions } from "./duck";
+import * as routes from "./../AddressList"
 import { api } from '../../services/api';
 
 export function* fetchLogInWorker(action) {
@@ -13,6 +14,7 @@ export function* fetchLogInWorker(action) {
 		
 		if (result.data.success) {
 			yield put(actions.logInSuccess(result.data));
+			
 		} else {
 			yield put(actions.logInFailure());
 		}
