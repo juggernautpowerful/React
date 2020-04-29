@@ -30,7 +30,7 @@ export const NewCard = () => {
                         Перейти в профиль
 					</Button>
 				</Grid>
-			</Grid>to
+			</Grid>
 		</Paper>
 	);
 };
