@@ -65,15 +65,12 @@ class Profile extends React.PureComponent {
 	handlerSubmit = (e) => {
 		e.preventDefault();
 		const { cardSave } = this.props;
-		//console.log("this.state ", this.state);
 		cardSave(this.state);
 	};
 
 	render() {
 		const { isUpdatedCard } = this.props;
 		const { cardNumber, cardName, expiryDate, cvc } = this.state;
-		// console.log("this.props ", this.props);
-		// console.log("isUpdatedCard ", isUpdatedCard);
 		if (isUpdatedCard) {
 			return (
 				<>

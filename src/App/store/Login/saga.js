@@ -11,6 +11,7 @@ export function* fetchLogInWorker(action) {
 		const result = yield call(logIn);
 
 		if (result.data.success) {
+			
 			yield put(actions.logInSuccess(result.data));
 		} else {
 			yield put(actions.logInFailure());

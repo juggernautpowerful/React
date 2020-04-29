@@ -18,7 +18,7 @@ import { Logo } from "loft-taxi-mui-theme";
 
 const mapStateToProps = (state) => ({
 	isSubmited: isSubmitedSelector(state),
-	isAuth: isAuthSelector(state)
+	isAuth: isAuthSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -45,9 +45,7 @@ class SignIn extends React.Component {
 
 	render() {
 		const { email, password, name, surname } = this.state;
-		 //const { isSubmited } = this.props;
-		 const { isAuth } = this.props;
-		// console.log("isSubmited: ", isSubmited);
+		const { isAuth } = this.props;
 		if (isAuth) {
 			return <Redirect path="/signin" to="/dashboard/map" />;
 		} else {
