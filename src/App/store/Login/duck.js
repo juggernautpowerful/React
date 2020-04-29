@@ -13,6 +13,7 @@ export const actions = {
 };
 
 const initialState = {
+	error:"",
 	tokenAuth: tokenAuth,
 	isAuth: isAuth,
 	isLoading: false,
@@ -31,7 +32,7 @@ export const loginReducer = (state = initialState, action) => {
 			}
 			return state;
 		case constants.LOGIN_REQUEST:
-			return { ...state, isLoading: true };
+			return { ...state, isLoading: true, error:"" };
 		case constants.LOGIN_SUCCESS:
 			localStorage.setItem("isAuth", JSON.stringify(true));
 			localStorage.setItem("tokenAuth", action.payload.token);
@@ -42,13 +43,14 @@ export const loginReducer = (state = initialState, action) => {
 				data: action.payload,
 				isAuth: true,
 				tokenAuth: action.payload.token,
+				error:""
 			};
 		case constants.LOGIN_FAILURE:
-			return { ...state, isLoading: false, isAuth: false, tokenAuth: "" };
+			return { ...state, isLoading: false, isAuth: false, tokenAuth: "", error:  action.payload };
 		case constants.LOGOUT:
 			localStorage.setItem("isAuth", JSON.stringify(false));
 			localStorage.setItem("tokenAuth", "");
-			return { ...state, isLoading: false, isAuth: false, tokenAuth: "" };
+			return { ...state, isLoading: false, isAuth: false, tokenAuth: "", error:"" };
 		default:
 			return state;
 	}

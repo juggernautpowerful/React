@@ -1,15 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { actions } from "../../../store/Card";
-import {
-	isUpdatedCardSelector,
-	cardDataSelector
-} from "../../../store/Card";
+import { isUpdatedCardSelector, cardDataSelector } from "../../../store/Card";
 import { Link } from "react-router-dom";
 import {
 	Button,
 	Input,
 	Grid,
+	TextField,
 	Typography,
 	Paper,
 	Card,
@@ -20,7 +18,7 @@ import { MCIcon } from "loft-taxi-mui-theme";
 
 const mapStateToProps = (state) => ({
 	isUpdatedCard: isUpdatedCardSelector(state),
-	cardData: cardDataSelector(state)
+	cardData: cardDataSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -30,24 +28,32 @@ const mapDispatchToProps = (dispatch) => ({
 
 class Profile extends React.PureComponent {
 	state = {
-		cardNumber: "",
-		cardName: "",
-		expiryDate: "",
-		cvc: "",
+		cardNumber: this.props.cardData.cardNumber
+			? this.props.cardData.cardNumber
+			: "",
+		cardName: this.props.cardData.cardName ? this.props.cardData.cardName : "",
+		expiryDate: this.props.cardData.expiryDate
+			? this.props.cardData.expiryDate
+			: "",
+		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
 	};
 	componentDidMount() {
-		this.props.cardGet();	
+		this.props.cardGet();
 	}
 	componentDidUpdate(prevProp) {
-		//console.log("componentDidUpdate.props ", this.props);
+		const {
+			cardData: { cardNumber, cardName, expiryDate, cvc },
+		} = this.props;
+
 		let isCompareProps =
 			JSON.stringify(prevProp.cardData) === JSON.stringify(this.props.cardData);
+
 		if (!isCompareProps) {
 			this.setState({
-				cardNumber: this.props.cardData.cardNumber,
-				cardName: this.props.cardData.cardName,
-				expiryDate: this.props.cardData.expiryDate,
-				cvc: this.props.cardData.cvc,
+				cardNumber,
+				cardName,
+				expiryDate,
+				cvc,
 			});
 		}
 	}
@@ -222,9 +228,11 @@ class Profile extends React.PureComponent {
 																	value={cardNumber}
 																	onChange={this.handlerChange}
 																/>
-																<Input
+																<TextField
+																	error={!true}
 																	type="text"
 																	name="cvc"
+																	label=""
 																	placeholder="cvc"
 																	maxLength="3"
 																	value={cvc}

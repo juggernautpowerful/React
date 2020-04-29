@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 
 import { connect } from "react-redux";
 import { OrderForm } from "../OrderForm";
-import { NewOrder } from "../NewOrder";
+import {NewOrder} from "../NewOrder";
 import { actions, IsAddressesSelector } from "../../../store/AddressList";
 import { drawRoute } from "./RouteUtils";
 import { actions as routeActions, isRouteSelector } from "../../../store/Route";
@@ -19,9 +19,9 @@ class Map extends React.Component {
 			style: "mapbox://styles/mapbox/streets-v9",
 		});
 
-		//if (!this.props.isAddresses) {
+		if (!this.props.isAddresses) {
 			this.props.fetchAddressList();
-		//}
+		}
 	}
 
 	componentWillUnmount() {
@@ -38,9 +38,9 @@ class Map extends React.Component {
 			width: "100%",
 			height: `${window.innerHeight - 100}px`,
 		};
-		///console.log(this.props.isRoute, this.props.route);
+		console.log(this.props.isRoute, this.props.route)
 
-		if (this.props.isRoute) {
+		if (this.props.isRoute) {			
 			drawRoute(this.map, this.props.route);
 		}
 		return (
@@ -48,11 +48,9 @@ class Map extends React.Component {
 				<div style={{ position: "relative", zIndex: "-10" }}>
 					<div style={style} ref={(el) => (this.mapContainer = el)} />
 				</div>
-				{this.props.isRoute ? (
-					<NewOrder flushRoute={this.props.routeClear} />
-				) : (
-					<OrderForm />
-				)}
+				{ this.props.isRoute ? <NewOrder flushRoute={this.props.routeClear}/> :  <OrderForm /> }
+
+				
 			</>
 		);
 	}
@@ -60,7 +58,7 @@ class Map extends React.Component {
 const mapStateToProps = (state) => ({
 	isAddresses: IsAddressesSelector(state),
 	isRoute: isRouteSelector(state),
-	route: state.routeReducer.data,
+	route: state.routeReducer.data
 });
 
 const mapDispatchToProps = (dispatch) => ({

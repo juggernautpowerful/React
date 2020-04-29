@@ -1,59 +1,30 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 
 import { AddressListSelector } from "../../../store/AddressList";
 import { actions as routeActions } from "../../../store/Route";
 
-import Select from "react-select";
-import { Button, Grid, Typography, Paper } from "@material-ui/core";
-
-
-
-const removeFromArray = (name, array) => {
-	return array.filter((el) => {
-		if (el.value !== name) return el;
-	});
-};
+import {
+	Button,
+	Grid,
+	Typography,
+	Paper,
+	TextField,
+	MenuItem,
+} from "@material-ui/core";
 
 const OrderForm = (props) => {
-	useEffect(() => {
-		console.log("useEffect props.addresses ", props.addresses);
-		const list = props.addresses
-			? props.addresses.map((item) => ({
-					value: item,
-					label: item,
-			  }))
-			: [];
+	const [itemSelectedFrom, setItemSelectedFrom] = React.useState("");
+	const [itemSelectedTo, setItemSelectedTo] = React.useState("");
 
-		if (list.length > 0 && fromList.length === 0) {
-			setFromList(list);
-		}
-		if (list.length > 0 && toList.length === 0) {
-			setToList(list);
-		}
-	});
-	console.log("OrderForm props ", props);
-	
-	const [fromSelected, setFrom] = React.useState("");
-	const [toSelected, setTo] = React.useState("");
-	const [toList, setFromList] = React.useState(
-		props.addresses ? props.addresses : ""
-	);
-	const [fromList, setToList] = React.useState(
-		props.addresses ? props.addresses : ""
-	);
-	console.log("toList ", toList);
-	const handleChange = (event, props) => {
-		const { label } = event;
-		const { name } = props;
+	const handleChange = (e) => {
+		const { name, value } = e.target;
 		switch (name) {
 			case "from":
-				setFrom(label);
-				setFromList(removeFromArray(label, fromList));
+				setItemSelectedFrom(value);
 				break;
 			case "to":
-				setTo(label);
-				setToList(removeFromArray(label, toList));
+				setItemSelectedTo(value);
 				break;
 			default:
 				break;
@@ -63,7 +34,7 @@ const OrderForm = (props) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		props.getRoute([fromSelected, toSelected]);
+		props.getRoute([itemSelectedFrom, itemSelectedTo]);
 	};
 
 	return (
@@ -74,7 +45,7 @@ const OrderForm = (props) => {
 				marginTop: "48px",
 				marginBottom: "48px",
 				left: "20px",
-				maxWidth: "30%",
+				width: "25%",
 				position: "absolute",
 			}}
 		>
@@ -86,20 +57,48 @@ const OrderForm = (props) => {
 						</Typography>
 					</Grid>
 					<Grid item xs={12} style={{ marginBottom: "40px" }}>
-						<Select
+						<TextField
 							name="from"
-							options={fromList}
-							placeholder="Выберите адрес отправления"
+							select
+							margin="normal"
+							placeholder="откуда"
+							value={itemSelectedFrom}
 							onChange={handleChange}
-						/>
+							fullWidth
+						>
+							{props.addresses.map((address) =>
+								itemSelectedTo === address ? (
+									address
+								) : (
+									<MenuItem key={address} value={address}>
+										{address}
+									</MenuItem>
+								)
+							)}
+						</TextField>
 					</Grid>
 					<Grid item xs={12} style={{ marginBottom: "40px" }}>
-						<Select
-							name="to"
-							options={toList}
-							placeholder="Выберите адрес прибытия"
-							onChange={handleChange}
-						/>
+						<div style={{ position: "relative", boxSizing: "border-box" }}>
+							<TextField
+								name="to"
+								select
+								margin="normal"
+								placeholder="Standard"
+								value={itemSelectedTo}
+								onChange={handleChange}
+								fullWidth
+							>
+								{props.addresses.map((address) =>
+									itemSelectedFrom === address ? (
+										address
+									) : (
+										<MenuItem key={address} value={address}>
+											{address}
+										</MenuItem>
+									)
+								)}
+							</TextField>
+						</div>
 					</Grid>
 					<Grid item xs={12}>
 						<Button variant="contained" color="primary" fullWidth type="submit">
@@ -113,7 +112,7 @@ const OrderForm = (props) => {
 };
 
 const mapStateToProps = (state) => ({
-	addresses: AddressListSelector(state),
+	addresses: AddressListSelector(state) ? AddressListSelector(state) : [],
 });
 
 const mapDispatchToProps = (dispatch) => ({

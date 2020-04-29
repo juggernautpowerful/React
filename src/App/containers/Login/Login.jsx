@@ -2,8 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { actions } from "../../store/Login";
 import { Redirect } from "react-router-dom";
-import { isAuthSelector } from "../../store/Login";
-
+import {
+	isAuthSelector,
+	isLoadingSelector,
+	errorSelector,
+} from "../../store/Login";
+import { CircularIndeterminate as Loader } from "../../components/Loader";
+//import { Alert } from '@material-ui/lab';
 import {
 	Button,
 	Input,
@@ -11,12 +16,15 @@ import {
 	Typography,
 	Paper,
 	Link,
+	Box,
 } from "@material-ui/core";
 import Background from "../../../Images/login-background.jpg";
 import { Logo } from "loft-taxi-mui-theme";
 
 const mapStateToProps = (state) => ({
 	isAuth: isAuthSelector(state),
+	isLoading: isLoadingSelector(state),
+	error: errorSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -33,6 +41,7 @@ export class Login extends React.Component {
 		e.preventDefault();
 		const { logIn } = this.props;
 		logIn(this.state);
+		//console.log(this.props.isLoa);
 	};
 
 	handlerChange = (e) => {
@@ -41,7 +50,7 @@ export class Login extends React.Component {
 	render() {
 		const { email, password } = this.state;
 		const { isAuth } = this.props;
-
+		//console.log("isLoading ", this.props.isLoading);
 		if (isAuth) {
 			return <Redirect path="/login" to="/dashboard/map" />;
 		} else {
@@ -115,20 +124,44 @@ export class Login extends React.Component {
 													style={{ width: "100%" }}
 												/>
 											</Grid>
-											<Grid
-												item
-												xs={12}
-												style={{ marginTop: "10px" }}
-												align="right"
-											>
-												<Button
-													variant="contained"
-													color="primary"
-													type="submit"
+											<Grid item xs={12} style={{ marginBottom: "30px" }}>
+												<Grid
+													item
+													xs={12}
+													style={{ marginTop: "10px" }}
+													align="left"
 												>
-													Войти
-												</Button>
+													<label style={{ color: "red" }}>
+														{this.props.error}
+													</label>
+													{/* <Alert severity="error">{this.props.error}</Alert> */}
+												</Grid>
 											</Grid>
+											{this.props.isLoading ? (
+												<Grid
+													item
+													xs={12}
+													style={{ marginTop: "10px" }}
+													align="center"
+												>
+													<Loader />
+												</Grid>
+											) : (
+												<Grid
+													item
+													xs={12}
+													style={{ marginTop: "10px" }}
+													align="right"
+												>
+													<Button
+														variant="contained"
+														color="primary"
+														type="submit"
+													>
+														Войти
+													</Button>
+												</Grid>
+											)}
 										</Grid>
 									</form>
 								</Grid>

@@ -20,6 +20,7 @@ export const routeReducer = (state = initialState, action) => {
 		case constants.ROUTE_REQUEST:
 			return { ...state, isLoading: true };
 		case constants.ROUTE_SUCCESS:
+			
 			return { ...state, isLoading: false, data: action.payload };
 		case constants.ROUTE_FAILURE:
 			return { ...state, isLoading: false };
