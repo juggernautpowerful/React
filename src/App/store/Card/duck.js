@@ -11,6 +11,7 @@ export const actions = {
 };
 
 const initialState = {
+	error:"",
 	isUpdatedCard: false,
 	isLoading: false,
 	data: {},
@@ -19,20 +20,21 @@ const initialState = {
 export const cardReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case constants.CARD_SAVE_REQUEST:
-			return { ...state, isLoading: true, isUpdatedCard: false };
+			return { ...state, isLoading: true, isUpdatedCard: false, error:  "" };
 		case constants.CARD_SAVE_SUCCESS:
 			return {
 				...state,
 				isLoading: false,
 				isUpdatedCard: true,
 				data: action.payload,
+				error:  ""
 			};
 		case constants.CARD_GET_REQUEST:
-			return { ...state, isLoading: true, isUpdatedCard: false };
+			return { ...state, isLoading: true, isUpdatedCard: false, error:  "" };
 		case constants.CARD_GET_SUCCESS:
-			return { ...state, isLoading: false, isUpdatedCard: false, data: action.payload };
+			return { ...state, isLoading: false, isUpdatedCard: false, data: action.payload, error:  "" };
 		case constants.CARD_FAILURE:
-			return { ...state, isLoading: false, isUpdatedCard: false };
+			return { ...state, isLoading: false, isUpdatedCard: false, error:  action.payload };
 
 		default:
 			return state;

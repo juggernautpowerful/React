@@ -15,8 +15,7 @@ import {
 	Grid,
 	Typography,
 	Paper,
-	Link,
-	Box,
+	Link
 } from "@material-ui/core";
 import Background from "../../../Images/login-background.jpg";
 import { Logo } from "loft-taxi-mui-theme";
@@ -41,7 +40,6 @@ export class Login extends React.Component {
 		e.preventDefault();
 		const { logIn } = this.props;
 		logIn(this.state);
-		//console.log(this.props.isLoa);
 	};
 
 	handlerChange = (e) => {
@@ -50,7 +48,6 @@ export class Login extends React.Component {
 	render() {
 		const { email, password } = this.state;
 		const { isAuth } = this.props;
-		//console.log("isLoading ", this.props.isLoading);
 		if (isAuth) {
 			return <Redirect path="/login" to="/dashboard/map" />;
 		} else {

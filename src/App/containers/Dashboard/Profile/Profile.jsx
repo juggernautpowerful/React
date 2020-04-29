@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { actions } from "../../../store/Card";
-import { isUpdatedCardSelector, cardDataSelector } from "../../../store/Card";
+import { isUpdatedCardSelector, cardDataSelector, errorSelector } from "../../../store/Card";
 import { Link } from "react-router-dom";
 import {
 	Button,
@@ -19,11 +19,12 @@ import { MCIcon } from "loft-taxi-mui-theme";
 const mapStateToProps = (state) => ({
 	isUpdatedCard: isUpdatedCardSelector(state),
 	cardData: cardDataSelector(state),
+	error: errorSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	cardSave: (value) => dispatch(actions.cardSave(value)),
-	cardGet: () => dispatch(actions.cardGet()),
+	///cardGet: () => dispatch(actions.cardGet()),
 });
 
 class Profile extends React.PureComponent {
@@ -37,10 +38,11 @@ class Profile extends React.PureComponent {
 			: "",
 		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
 	};
-	componentDidMount() {
-		this.props.cardGet();
-	}
+	// componentDidMount() {
+	// 	this.props.cardGet();
+	// }
 	componentDidUpdate(prevProp) {
+		console.log("this.props ", this.props);
 		const {
 			cardData: { cardNumber, cardName, expiryDate, cvc },
 		} = this.props;
@@ -65,15 +67,13 @@ class Profile extends React.PureComponent {
 	handlerSubmit = (e) => {
 		e.preventDefault();
 		const { cardSave } = this.props;
-		//console.log("this.state ", this.state);
 		cardSave(this.state);
 	};
 
 	render() {
 		const { isUpdatedCard } = this.props;
 		const { cardNumber, cardName, expiryDate, cvc } = this.state;
-		// console.log("this.props ", this.props);
-		// console.log("isUpdatedCard ", isUpdatedCard);
+
 		if (isUpdatedCard) {
 			return (
 				<>
@@ -127,6 +127,14 @@ class Profile extends React.PureComponent {
 												такси.
 											</Typography>
 										</Grid>
+										<Grid item xs={12} align="left" style={{ marginBottom: "30px" }}>
+
+													<label style={{ color: "red" }}>
+														{this.props.error}
+													</label>
+						
+												
+											</Grid>
 										<Grid item xs={12} align="center">
 											<Button
 												color="primary"

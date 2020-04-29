@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import { Map } from "./Map";
 import { Profile } from "./Profile";
+import { actions } from "../../store/Card";
+import { connect } from "react-redux";
 
-export const Dashboard = (props) => {
+const mapDispatchToProps = (dispatch) => ({
+	cardGet: () => dispatch(actions.cardGet()),
+});
+
+const Dashboard = (props) => {
+	useEffect(() => {
+		props.cardGet();
+	}, []);
+
 	return (
 		<>
 			<Switch>
@@ -13,3 +23,6 @@ export const Dashboard = (props) => {
 		</>
 	);
 };
+
+const connectedDashboard = connect(null, mapDispatchToProps)(Dashboard);
+export { connectedDashboard as Dashboard };
