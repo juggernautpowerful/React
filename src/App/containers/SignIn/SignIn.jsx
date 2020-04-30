@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import Background from "../../../Images/login-background.jpg";
 import { Logo } from "loft-taxi-mui-theme";
+import commonClasses from "../../Common.module.css";
 
 const mapStateToProps = (state) => ({
 	isSubmited: isSubmitedSelector(state),
@@ -68,15 +69,7 @@ class SignIn extends React.Component {
 								<Logo animated />
 							</Grid>
 							<Grid item xs={3}>
-								<Paper
-									elevation={1}
-									style={{
-										padding: "44px 60px",
-										minWidth: "500px",
-										marginTop: "48px",
-										marginBottom: "48px",
-									}}
-								>
+								<Paper elevation={1} className={commonClasses.wrapPaper}>
 									<form onSubmit={this.handlerSubmit} style={{ width: "100%" }}>
 										<Grid container spacing={2}>
 											<Grid item xs={12}>

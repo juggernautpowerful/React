@@ -8,7 +8,7 @@ import {
 	errorSelector,
 } from "../../store/Login";
 import { CircularIndeterminate as Loader } from "../../components/Loader";
-//import { Alert } from '@material-ui/lab';
+import commonClasses from "../../Common.module.css";
 import {
 	Button,
 	Input,
@@ -16,7 +16,6 @@ import {
 	Typography,
 	Paper,
 	Link,
-	Box,
 } from "@material-ui/core";
 import Background from "../../../Images/login-background.jpg";
 import { Logo } from "loft-taxi-mui-theme";
@@ -41,7 +40,6 @@ export class Login extends React.Component {
 		e.preventDefault();
 		const { logIn } = this.props;
 		logIn(this.state);
-		//console.log(this.props.isLoa);
 	};
 
 	handlerChange = (e) => {
@@ -50,7 +48,6 @@ export class Login extends React.Component {
 	render() {
 		const { email, password } = this.state;
 		const { isAuth } = this.props;
-		//console.log("isLoading ", this.props.isLoading);
 		if (isAuth) {
 			return <Redirect path="/login" to="/dashboard/map" />;
 		} else {
@@ -72,15 +69,7 @@ export class Login extends React.Component {
 							<Logo animated />
 						</Grid>
 						<Grid item xs={3}>
-							<Paper
-								elevation={1}
-								style={{
-									padding: "44px 60px",
-									minWidth: "500px",
-									marginTop: "48px",
-									marginBottom: "48px",
-								}}
-							>
+							<Paper className={commonClasses.wrapPaper} elevation={1}>
 								<Grid container>
 									<Grid item xs={12}>
 										<Typography

@@ -38,7 +38,6 @@ class Map extends React.Component {
 			width: "100%",
 			height: `${window.innerHeight - 100}px`,
 		};
-		console.log(this.props.isRoute, this.props.route)
 
 		if (this.props.isRoute) {			
 			drawRoute(this.map, this.props.route);
