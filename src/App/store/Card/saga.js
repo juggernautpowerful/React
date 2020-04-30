@@ -38,7 +38,7 @@ export function* fetchCardGetWorker() {
 			yield put(actions.cardFailure());
 		}
 	} catch (error) {
-		yield put(actions.cardFailure());
+		yield put(actions.cardFailure(error.toString()));
 	}
 }
 

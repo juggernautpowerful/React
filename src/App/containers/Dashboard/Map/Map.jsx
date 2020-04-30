@@ -3,10 +3,12 @@ import mapboxgl from "mapbox-gl";
 
 import { connect } from "react-redux";
 import { OrderForm } from "../OrderForm";
-import {NewOrder} from "../NewOrder";
+import { NewOrder } from "../../../components/NewOrder";
+import { NewCard } from "../../../components/NewCard";
 import { actions, IsAddressesSelector } from "../../../store/AddressList";
 import { drawRoute } from "./RouteUtils";
 import { actions as routeActions, isRouteSelector } from "../../../store/Route";
+import { isCardDataSelector } from "../../../store/Card";
 
 class Map extends React.Component {
 	componentDidMount() {
@@ -39,7 +41,7 @@ class Map extends React.Component {
 			height: `${window.innerHeight - 100}px`,
 		};
 
-		if (this.props.isRoute) {			
+		if (this.props.isRoute) {
 			drawRoute(this.map, this.props.route);
 		}
 		return (
@@ -47,9 +49,15 @@ class Map extends React.Component {
 				<div style={{ position: "relative", zIndex: "-10" }}>
 					<div style={style} ref={(el) => (this.mapContainer = el)} />
 				</div>
-				{ this.props.isRoute ? <NewOrder flushRoute={this.props.routeClear}/> :  <OrderForm /> }
-
-				
+				{this.props.isCard ? (
+					this.props.isRoute ? (
+						<NewOrder flushRoute={this.props.routeClear} />
+					) : (
+						<OrderForm />
+					)
+				) : (
+					<NewCard />
+				)}
 			</>
 		);
 	}
@@ -57,7 +65,8 @@ class Map extends React.Component {
 const mapStateToProps = (state) => ({
 	isAddresses: IsAddressesSelector(state),
 	isRoute: isRouteSelector(state),
-	route: state.routeReducer.data
+	route: state.routeReducer.data,
+	isCard: isCardDataSelector(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

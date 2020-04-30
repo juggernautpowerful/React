@@ -37,7 +37,6 @@ class Profile extends React.PureComponent {
 			: "",
 		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
 	};
-
 	componentDidUpdate(prevProp) {
 		console.log("this.props ", this.props);
 		const {
