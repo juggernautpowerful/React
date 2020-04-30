@@ -12,6 +12,8 @@ import {
 	TextField,
 	MenuItem,
 } from "@material-ui/core";
+import styles from "./OrderForm.module.css";
+//import commonStyles from "../../../Common.module.css";
 
 const OrderForm = (props) => {
 	const [itemSelectedFrom, setItemSelectedFrom] = React.useState("");
@@ -38,25 +40,15 @@ const OrderForm = (props) => {
 	};
 
 	return (
-		<Paper
-			elevation={1}
-			style={{
-				padding: "44px 60px",
-				marginTop: "48px",
-				marginBottom: "48px",
-				left: "20px",
-				width: "25%",
-				position: "absolute",
-			}}
-		>
+		<Paper elevation={1} className={styles.wrapPaper}>
 			<form onSubmit={handleSubmit}>
 				<Grid container>
-					<Grid item xs={12} style={{ marginBottom: "40px" }}>
+					<Grid item xs={12}>
 						<Typography variant="h4" component="h1" align="left">
 							Вызов такси
 						</Typography>
 					</Grid>
-					<Grid item xs={12} style={{ marginBottom: "40px" }}>
+					<Grid item xs={12}>
 						<TextField
 							name="from"
 							select
@@ -77,8 +69,8 @@ const OrderForm = (props) => {
 							)}
 						</TextField>
 					</Grid>
-					<Grid item xs={12} style={{ marginBottom: "40px" }}>
-						<div style={{ position: "relative", boxSizing: "border-box" }}>
+					<Grid item xs={12} className="Tset">
+						<div className={styles.boxList}>
 							<TextField
 								name="to"
 								select

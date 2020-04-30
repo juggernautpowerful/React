@@ -1,0 +1,11 @@
+  .wrapPaper {
+    composes: wrapPaper from '../../../Common.module.css';
+    left: 20px;
+    width: 25%;
+    position: absolute;
+  }
+
+  .boxList {
+    position: relative;
+    box-sizing: border-box;
+  }

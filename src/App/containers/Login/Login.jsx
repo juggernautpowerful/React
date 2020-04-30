@@ -8,7 +8,7 @@ import {
 	errorSelector,
 } from "../../store/Login";
 import { CircularIndeterminate as Loader } from "../../components/Loader";
-import commonClasses from "../../Common.module.css";
+import commonStyles from "../../Common.module.css";
 import {
 	Button,
 	Input,
@@ -69,17 +69,13 @@ export class Login extends React.Component {
 							<Logo animated />
 						</Grid>
 						<Grid item xs={3}>
-							<Paper className={commonClasses.wrapPaper} elevation={1}>
+							<Paper className={commonStyles.wrapPaper} elevation={1}>
 								<Grid container>
 									<Grid item xs={12}>
-										<Typography
-											align="left"
-											variant="h4"
-											component="h1"
-											style={{ marginBottom: "30px" }}
-										>
+										<Typography align="left" variant="h4" component="h1">
 											Войти
 										</Typography>
+
 										<Typography
 											align="left"
 											variant="body1"
@@ -93,17 +89,17 @@ export class Login extends React.Component {
 									</Grid>
 									<form onSubmit={this.handlerSubmit} style={{ width: "100%" }}>
 										<Grid container>
-											<Grid item xs={12} style={{ marginBottom: "30px" }}>
+											<Grid item xs={12}>
 												<Input
 													type="text"
 													placeholder="email"
 													name="email"
 													value={email}
 													onChange={this.handlerChange}
-													style={{ width: "100%" }}
+													fullWidth
 												/>
 											</Grid>
-											<Grid item xs={12} style={{ marginBottom: "30px" }}>
+											<Grid item xs={12}>
 												<Input
 													type="text"
 													placeholder="пароль"
@@ -113,7 +109,7 @@ export class Login extends React.Component {
 													style={{ width: "100%" }}
 												/>
 											</Grid>
-											<Grid item xs={12} style={{ marginBottom: "30px" }}>
+											<Grid item xs={12}>
 												<Grid
 													item
 													xs={12}
@@ -127,21 +123,11 @@ export class Login extends React.Component {
 												</Grid>
 											</Grid>
 											{this.props.isLoading ? (
-												<Grid
-													item
-													xs={12}
-													style={{ marginTop: "10px" }}
-													align="center"
-												>
+												<Grid item xs={12} align="center">
 													<Loader />
 												</Grid>
 											) : (
-												<Grid
-													item
-													xs={12}
-													style={{ marginTop: "10px" }}
-													align="right"
-												>
+												<Grid item xs={12} align="right">
 													<Button
 														variant="contained"
 														color="primary"

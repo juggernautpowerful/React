@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { actions } from "../../../store/Card";
-import { isUpdatedCardSelector, cardDataSelector, errorSelector } from "../../../store/Card";
+import {
+	isUpdatedCardSelector,
+	cardDataSelector,
+	errorSelector,
+} from "../../../store/Card";
 import { Link } from "react-router-dom";
 import {
 	Button,
@@ -15,6 +19,7 @@ import {
 } from "@material-ui/core";
 import Background from "../../../../Images/login-background.jpg";
 import { MCIcon } from "loft-taxi-mui-theme";
+import commonClasses from "../../../Common.module.css";
 
 const mapStateToProps = (state) => ({
 	isUpdatedCard: isUpdatedCardSelector(state),
@@ -38,7 +43,6 @@ class Profile extends React.PureComponent {
 		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
 	};
 	componentDidUpdate(prevProp) {
-		console.log("this.props ", this.props);
 		const {
 			cardData: { cardNumber, cardName, expiryDate, cvc },
 		} = this.props;
@@ -86,15 +90,7 @@ class Profile extends React.PureComponent {
 							style={{ minHeight: "100vh" }}
 						>
 							<Grid item>
-								<Paper
-									elevation={1}
-									style={{
-										padding: "44px 60px",
-										minWidth: "500px",
-										marginTop: "48px",
-										marginBottom: "48px",
-									}}
-								>
+								<Paper elevation={1} className={commonClasses.wrapPaper}>
 									<Typography align="center" variant="h4" component="h1">
 										Профиль
 									</Typography>
@@ -122,14 +118,14 @@ class Profile extends React.PureComponent {
 												такси.
 											</Typography>
 										</Grid>
-										<Grid item xs={12} align="left" style={{ marginBottom: "30px" }}>
-
-													<label style={{ color: "red" }}>
-														{this.props.error}
-													</label>
-						
-												
-											</Grid>
+										<Grid
+											item
+											xs={12}
+											align="left"
+											style={{ marginBottom: "30px" }}
+										>
+											<label style={{ color: "red" }}>{this.props.error}</label>
+										</Grid>
 										<Grid item xs={12} align="center">
 											<Button
 												color="primary"

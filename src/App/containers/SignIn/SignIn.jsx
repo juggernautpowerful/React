@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { actions } from "../../store/Register";
-import { isSubmitedSelector } from "../../store/Register";
 import { isAuthSelector } from "../../store/Login";
 import { Redirect } from "react-router-dom";
 
@@ -18,7 +17,6 @@ import { Logo } from "loft-taxi-mui-theme";
 import commonClasses from "../../Common.module.css";
 
 const mapStateToProps = (state) => ({
-	isSubmited: isSubmitedSelector(state),
 	isAuth: isAuthSelector(state),
 });
 
@@ -77,7 +75,6 @@ class SignIn extends React.Component {
 													align="left"
 													variant="h4"
 													component="h1"
-													style={{ marginBottom: "30px" }}
 												>
 													Регистрация
 												</Typography>
@@ -88,7 +85,7 @@ class SignIn extends React.Component {
 													</Typography>
 												</Typography>
 											</Grid>
-											<Grid item xs={12} style={{ marginBottom: "30px" }}>
+											<Grid item xs={12} >
 												<Input
 													type="text"
 													name="email"
@@ -105,10 +102,10 @@ class SignIn extends React.Component {
 													placeholder="имя"
 													value={name}
 													onChange={this.handlerChange}
-													style={{ width: "100%" }}
+													fullWidth
 												/>
 											</Grid>
-											<Grid item xs={6} style={{ marginBottom: "30px" }}>
+											<Grid item xs={6} >
 												<Input
 													type="text"
 													name="surname"
@@ -118,7 +115,7 @@ class SignIn extends React.Component {
 													style={{ width: "100%" }}
 												/>
 											</Grid>
-											<Grid item xs={12} style={{ marginBottom: "30px" }}>
+											<Grid item xs={12} >
 												<Input
 													type="text"
 													name="password"
@@ -131,7 +128,6 @@ class SignIn extends React.Component {
 											<Grid
 												item
 												xs={12}
-												style={{ marginTop: "10px" }}
 												align="right"
 											>
 												<Button
