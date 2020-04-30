@@ -2,7 +2,6 @@ import { takeLatest, call, put, select } from "redux-saga/effects";
 import * as constants from "./constants";
 import { actions } from "./duck";
 import { api } from "../../services/api";
-//import { tokenSelector } from "../../../Login/store/selectors";
 import { tokenSelector } from "../Login";
 
 const getToken = (state) => tokenSelector(state);
@@ -10,7 +9,6 @@ const getToken = (state) => tokenSelector(state);
 export function* fetchCardSaveWorker(action) {
 	const { payload } = action;
 	payload.token = yield select(getToken);
-	//yield console.log("actionSaveWorker ", action);
 	const cardSave = () => api.post("/card", payload);
 
 	try {

@@ -24,7 +24,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	cardSave: (value) => dispatch(actions.cardSave(value)),
-	///cardGet: () => dispatch(actions.cardGet()),
 });
 
 class Profile extends React.PureComponent {
@@ -38,9 +37,7 @@ class Profile extends React.PureComponent {
 			: "",
 		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
 	};
-	// componentDidMount() {
-	// 	this.props.cardGet();
-	// }
+
 	componentDidUpdate(prevProp) {
 		console.log("this.props ", this.props);
 		const {
