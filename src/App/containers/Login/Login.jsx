@@ -9,16 +9,24 @@ import {
 } from "../../store/Login";
 import { CircularIndeterminate as Loader } from "../../components/Loader";
 import commonStyles from "../../Common.module.css";
+
 import {
 	Button,
-	Input,
 	Grid,
 	Typography,
 	Paper,
 	Link,
+	Box
 } from "@material-ui/core";
+import {
+	TextField
+  } from 'mui-rff';
+  import {
+	Alert
+} from "@material-ui/lab";
 import Background from "../../../Images/login-background.jpg";
 import { Logo } from "loft-taxi-mui-theme";
+import { Form } from "react-final-form";
 
 const mapStateToProps = (state) => ({
 	isAuth: isAuthSelector(state),
@@ -30,24 +38,57 @@ const mapDispatchToProps = (dispatch) => ({
 	logIn: (value) => dispatch(actions.logIn(value)),
 });
 
+const validate = (values) => {
+	const errors = {};
+	console.log("validate ", values);
+	if (!values.email) {
+		errors.email = "Required";
+	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+		errors.email = "Invalid email address";
+	}
+	return errors;
+};
+const formFields = [
+	{
+		size: 12,
+		field: (
+			<TextField
+				type="email"
+				label="Email"
+				name="email"
+				margin="none"
+				required={true}
+				fullWidth
+			/>
+		),
+	},
+	{
+		size: 12,
+		field: (
+			<TextField
+				label="Пароль"
+				name="password"
+				margin="none"
+				fullWidth
+				required={true}
+			/>
+		),
+	},
+];
+
 export class Login extends React.Component {
 	state = {
-		email: "test@test.com",
-		password: "123123",
+		email: "",
+		password: "",
 	};
-
-	handlerSubmit = (e) => {
-		e.preventDefault();
+	handleSubmit = (values) => {
 		const { logIn } = this.props;
-		logIn(this.state);
-	};
-
-	handlerChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
+		console.log("values ", values);
+		logIn({ email: values.email, password: values.password });
 	};
 	render() {
-		const { email, password } = this.state;
 		const { isAuth } = this.props;
+
 		if (isAuth) {
 			return <Redirect path="/login" to="/dashboard/map" />;
 		} else {
@@ -87,58 +128,46 @@ export class Login extends React.Component {
 											</Typography>
 										</Typography>
 									</Grid>
-									<form onSubmit={this.handlerSubmit} style={{ width: "100%" }}>
-										<Grid container>
-											<Grid item xs={12}>
-												<Input
-													type="text"
-													placeholder="email"
-													name="email"
-													value={email}
-													onChange={this.handlerChange}
-													fullWidth
-												/>
-											</Grid>
-											<Grid item xs={12}>
-												<Input
-													type="text"
-													placeholder="пароль"
-													name="password"
-													value={password}
-													onChange={this.handlerChange}
-													style={{ width: "100%" }}
-												/>
-											</Grid>
-											<Grid item xs={12}>
-												<Grid
-													item
-													xs={12}
-													style={{ marginTop: "10px" }}
-													align="left"
-												>
-													<label style={{ color: "red" }}>
-														{this.props.error}
-													</label>
-													{/* <Alert severity="error">{this.props.error}</Alert> */}
-												</Grid>
-											</Grid>
-											{this.props.isLoading ? (
-												<Grid item xs={12} align="center">
-													<Loader />
-												</Grid>
-											) : (
-												<Grid item xs={12} align="right">
-													<Button
-														variant="contained"
-														color="primary"
-														type="submit"
-													>
-														Войти
-													</Button>
-												</Grid>
+									<Grid container>
+										<Form
+											onSubmit={this.handleSubmit}
+											validate={validate}
+											initialValues={this.state}
+											render={({ handleSubmit, values }) => (
+												<form onSubmit={handleSubmit} style={{ width: "100%" }}>
+													{formFields.map((item, idx) => (
+														<Grid item xs={item.size} key={idx}>
+															{item.field}
+														</Grid>
+													))}
+
+													{this.props.error && (
+														<Box mt={2}>
+															{/* <Typography color="error" variant="body2">
+																{this.props.error}
+															</Typography> */}
+															<Alert severity="error">{this.props.error}</Alert>
+														</Box>
+													)}
+													{this.props.isLoading ? (
+														<Grid item xs={12} align="center">
+															<Loader />
+														</Grid>
+													) : (
+														<Grid item xs={12} align="right">
+															<Button
+																variant="contained"
+																color="primary"
+																type="submit"
+															>
+																Войти
+															</Button>
+														</Grid>
+													)}
+												</form>
 											)}
-										</Grid>
-									</form>
+										/>
+									</Grid>
 								</Grid>
 							</Paper>
 						</Grid>
