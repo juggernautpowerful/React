@@ -13,7 +13,7 @@ import {
 	Typography,
 	Paper,
 	Card,
-	Box, Input
+	Box
 } from "@material-ui/core";
 
 import {
