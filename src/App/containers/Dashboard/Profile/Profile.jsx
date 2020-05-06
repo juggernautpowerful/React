@@ -39,7 +39,7 @@ const validate = (values) => {
 	const errors = {};
 	if (!values.cardNumber) {
 		errors.cardNumber = "Необходимо заполнить поле";
-	} else if (!/^[0-9\s]{19}$/i.test(values.cardNumber)) {
+	} else if (!/^[0-9\s]{16,22}$/i.test(values.cardNumber)) {
 		errors.cardNumber = "Номер карты не валидный";
 	}
 	if (!values.cardName) {
@@ -64,7 +64,7 @@ class Profile extends React.PureComponent {
 		cardNumber: "",
 		cardName: "",
 		expiryDate: "",
-		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
+		cvc: "",
 	};
 	async componentDidMount(prevProp) {
 		const {
@@ -103,10 +103,6 @@ class Profile extends React.PureComponent {
 
 	render() {
 		const { isUpdatedCard } = this.props;
-		const {
-			cardData: { cardNumber, cardName, expiryDate, cvc },
-		} = this.props;
-		console.log(cvc);
 		if (isUpdatedCard) {
 			return (
 				<>
@@ -224,7 +220,6 @@ class Profile extends React.PureComponent {
 																	placeholder="номер карты"
 																/>
 																<TextField
-																	error={!true}
 																	type="text"
 																	name="cvc"
 																	label="cvc"
