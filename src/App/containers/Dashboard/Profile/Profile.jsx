@@ -13,7 +13,7 @@ import {
 	Typography,
 	Paper,
 	Card,
-	Box,
+	Box, Input
 } from "@material-ui/core";
 
 import {
@@ -24,6 +24,11 @@ import Background from "../../../../Images/login-background.jpg";
 import { MCIcon } from "loft-taxi-mui-theme";
 import commonClasses from "../../../Common.module.css";
 import classes from "./Profile.module.css";
+import {
+	formatCreditCardNumber,
+	formatCVC,
+	formatExpirationDate
+  } from './cardUtils'
 
 const mapStateToProps = (state) => ({
 	isUpdatedCard: isUpdatedCardSelector(state),
@@ -39,7 +44,7 @@ const validate = (values) => {
 	const errors = {};
 	if (!values.cardNumber) {
 		errors.cardNumber = "Необходимо заполнить поле";
-	} else if (!/^[0-9\s]{16,22}$/i.test(values.cardNumber)) {
+	} else if (!/[\d| ]{16,19}$/i.test(values.cardNumber)) {
 		errors.cardNumber = "Номер карты не валидный";
 	}
 	if (!values.cardName) {
@@ -95,7 +100,17 @@ class Profile extends React.PureComponent {
 			});
 		}
 	}
-
+	handleInputChange = ({ target }) => {
+		if (target.name === 'cardNumber') {
+		  target.value = formatCreditCardNumber(target.value);
+		} else if (target.name === 'expiryDate') {
+		  target.value = formatExpirationDate(target.value);
+		} else if (target.name === 'cvc') {
+		  target.value = formatCVC(target.value);
+		}
+	
+		this.setState({ [target.name]: target.value });
+	  };
 	handlerSubmit = (values) => {
 		const { cardSave } = this.props;
 		cardSave({ cardNumber: values.cardNumber, cardName: values.cardName, expiryDate: values.expiryDate, cvc: values.cvc  });
@@ -218,6 +233,8 @@ class Profile extends React.PureComponent {
 																	label="номер карты"
 																	maxLength="16"
 																	placeholder="номер карты"
+																	autoComplete="off"
+																	onChange={this.handleInputChange}
 																/>
 																<TextField
 																	type="text"
@@ -225,6 +242,8 @@ class Profile extends React.PureComponent {
 																	label="cvc"
 																	placeholder="cvc"
 																	maxLength="3"
+																	autoComplete="off"
+																	onChange={this.handleInputChange}
 																/>
 															</Box>
 														</Card>
@@ -243,6 +262,9 @@ class Profile extends React.PureComponent {
 																	name="expiryDate"
 																	label="дата окончания"
 																	placeholder="04/20"
+																	autoComplete="off"
+																	pattern="\d\d/\d\d"
+																	onChange={this.handleInputChange}
 																/>
 															</Box>
 														</Card>
