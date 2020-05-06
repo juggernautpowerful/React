@@ -9,17 +9,21 @@ import {
 import { Link } from "react-router-dom";
 import {
 	Button,
-	Input,
 	Grid,
-	TextField,
 	Typography,
 	Paper,
 	Card,
 	Box,
 } from "@material-ui/core";
+
+import {
+	TextField
+  } from 'mui-rff';
+  import { Form } from "react-final-form";
 import Background from "../../../../Images/login-background.jpg";
 import { MCIcon } from "loft-taxi-mui-theme";
 import commonClasses from "../../../Common.module.css";
+import classes from "./Profile.module.css";
 
 const mapStateToProps = (state) => ({
 	isUpdatedCard: isUpdatedCardSelector(state),
@@ -31,17 +35,49 @@ const mapDispatchToProps = (dispatch) => ({
 	cardSave: (value) => dispatch(actions.cardSave(value)),
 });
 
+const validate = (values) => {
+	const errors = {};
+	if (!values.cardNumber) {
+		errors.cardNumber = "Необходимо заполнить поле";
+	} else if (!/^[0-9\s]{19}$/i.test(values.cardNumber)) {
+		errors.cardNumber = "Номер карты не валидный";
+	}
+	if (!values.cardName) {
+		errors.cardName = "Необходимо заполнить поле";
+	} 
+	if (!values.expiryDate) {
+		errors.expiryDate = "Необходимо заполнить поле";
+	} 
+	if (!values.cvc) {
+		errors.cvc = "Необходимо заполнить поле";
+	} else if (!/^[0-9]{3}$/i.test(values.cvc)) {
+		errors.cvc = "cvc не валидный";
+	}
+	return errors;
+};
+
+
+
 class Profile extends React.PureComponent {
+
 	state = {
-		cardNumber: this.props.cardData.cardNumber
-			? this.props.cardData.cardNumber
-			: "",
-		cardName: this.props.cardData.cardName ? this.props.cardData.cardName : "",
-		expiryDate: this.props.cardData.expiryDate
-			? this.props.cardData.expiryDate
-			: "",
+		cardNumber: "",
+		cardName: "",
+		expiryDate: "",
 		cvc: this.props.cardData.cvc ? this.props.cardData.cvc : "",
 	};
+	async componentDidMount(prevProp) {
+		const {
+			cardData: { cardNumber, cardName, expiryDate, cvc },
+		} = this.props;
+
+		this.setState({
+			cardNumber,
+			cardName,
+			expiryDate,
+			cvc,
+		});
+	}
 	componentDidUpdate(prevProp) {
 		const {
 			cardData: { cardNumber, cardName, expiryDate, cvc },
@@ -60,19 +96,17 @@ class Profile extends React.PureComponent {
 		}
 	}
 
-	handlerChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
-	};
-
-	handlerSubmit = (e) => {
-		e.preventDefault();
+	handlerSubmit = (values) => {
 		const { cardSave } = this.props;
-		cardSave(this.state);
+		cardSave({ cardNumber: values.cardNumber, cardName: values.cardName, expiryDate: values.expiryDate, cvc: values.cvc  });
 	};
 
 	render() {
 		const { isUpdatedCard } = this.props;
-		const { cardNumber, cardName, expiryDate, cvc } = this.state;
+		const {
+			cardData: { cardNumber, cardName, expiryDate, cvc },
+		} = this.props;
+		console.log(cvc);
 		if (isUpdatedCard) {
 			return (
 				<>
@@ -107,23 +141,12 @@ class Profile extends React.PureComponent {
 									</Typography>
 									<Grid container alignItems="center" spacing={2}>
 										<Grid item xs={12}>
-											<Typography
-												align="center"
-												variant="body1"
-												style={{
-													marginBottom: "30px",
-												}}
-											>
+											<Typography align="center" variant="body1">
 												Платёжные данные обновлены. Теперь вы можете заказывать
 												такси.
 											</Typography>
 										</Grid>
-										<Grid
-											item
-											xs={12}
-											align="left"
-											style={{ marginBottom: "30px" }}
-										>
+										<Grid item xs={12} align="left">
 											<label style={{ color: "red" }}>{this.props.error}</label>
 										</Grid>
 										<Grid item xs={12} align="center">
@@ -160,15 +183,7 @@ class Profile extends React.PureComponent {
 							style={{ minHeight: "100vh" }}
 						>
 							<Grid item>
-								<Paper
-									elevation={1}
-									style={{
-										padding: "44px 60px",
-										minWidth: "500px",
-										marginTop: "48px",
-										marginBottom: "48px",
-									}}
-								>
+								<Paper elevation={1} className={commonClasses.wrapPaper}>
 									<Typography align="center" variant="h4" component="h1">
 										Профиль
 									</Typography>
@@ -183,7 +198,12 @@ class Profile extends React.PureComponent {
 									>
 										Способ оплаты
 									</Typography>
-									<form onSubmit={this.handlerSubmit}>
+									<Form
+											onSubmit={this.handlerSubmit}
+											validate={validate}
+											initialValues={this.state}
+											render={({ handleSubmit, values }) => (
+									<form onSubmit={handleSubmit}>
 										<Grid container alignContent="center">
 											<Grid item xs={12}>
 												<Grid
@@ -193,85 +213,41 @@ class Profile extends React.PureComponent {
 													style={{ flexGrow: "1", marginBottom: "1px" }}
 												>
 													<Grid item xs={6}>
-														<Card
-															elevation={3}
-															style={{
-																width: "300px",
-																height: "189px",
-																padding: "16px 32px",
-																minWidth: "300px",
-																position: "relative",
-															}}
-														>
-															<Box
-																style={{
-																	display: "flex",
-																	height: "100%",
-																	flexDirection: "column",
-																	justifyContent: "space-around",
-																}}
-															>
-																<MCIcon
-																	style={{
-																		top: "8px",
-																		right: "8px",
-																		width: "32px",
-																		position: "absolute",
-																	}}
-																/>
-																<Input
+														<Card elevation={3} className={classes.card}>
+															<Box className={classes.cardBox}>
+																<MCIcon className={classes.iconCard} />
+																<TextField
 																	type="text"
 																	name="cardNumber"
+																	label="номер карты"
 																	maxLength="16"
 																	placeholder="номер карты"
-																	value={cardNumber}
-																	onChange={this.handlerChange}
 																/>
 																<TextField
 																	error={!true}
 																	type="text"
 																	name="cvc"
-																	label=""
+																	label="cvc"
 																	placeholder="cvc"
 																	maxLength="3"
-																	value={cvc}
-																	onChange={this.handlerChange}
 																/>
 															</Box>
 														</Card>
 													</Grid>
 													<Grid item xs={6}>
-														<Card
-															elevation={3}
-															style={{
-																width: "300px",
-																height: "189px",
-																padding: "16px 32px",
-																minWidth: "300px",
-																position: "relative",
-															}}
-														>
-															<Box
-																style={{
-																	display: "flex",
-																	height: "100%",
-																	flexDirection: "column",
-																	justifyContent: "space-around",
-																}}
-															>
-																<Input
+														<Card elevation={3} className={classes.card}>
+															<Box className={classes.cardBox}>
+																<TextField
 																	type="text"
 																	name="cardName"
+																	label="пользователь"
 																	placeholder="имя владельца"
-																	value={cardName}
-																	onChange={this.handlerChange}
 																/>
-																<Input
+																<TextField
 																	type="text"
 																	name="expiryDate"
+																	label="дата окончания"
 																	placeholder="04/20"
-																	value={expiryDate}
-																	onChange={this.handlerChange}
 																/>
 															</Box>
 														</Card>
@@ -290,6 +266,8 @@ class Profile extends React.PureComponent {
 											</Grid>
 										</Grid>
 									</form>
+									)}
+									/>
 								</Paper>
 							</Grid>
 						</Grid>

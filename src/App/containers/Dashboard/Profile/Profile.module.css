@@ -1,0 +1,21 @@
+.iconCard {
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    position: absolute;
+}
+
+.card {
+    width: 300px;
+    height: 189px;
+    padding: 16px 32px;
+    min-width: 300px;
+    position: relative;
+}
+
+.cardBox {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+}

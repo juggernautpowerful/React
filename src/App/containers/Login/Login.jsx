@@ -21,9 +21,7 @@ import {
 import {
 	TextField
   } from 'mui-rff';
-  import {
-	Alert
-} from "@material-ui/lab";
+
 import Background from "../../../Images/login-background.jpg";
 import { Logo } from "loft-taxi-mui-theme";
 import { Form } from "react-final-form";
@@ -40,7 +38,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const validate = (values) => {
 	const errors = {};
-	console.log("validate ", values);
 	if (!values.email) {
 		errors.email = "Необходимо заполнить поле";
 	} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
@@ -57,7 +54,6 @@ const formFields = [
 				label="Email"
 				name="email"
 				margin="none"
-				//required={true}
 				fullWidth
 			/>
 		),
@@ -70,7 +66,6 @@ const formFields = [
 				name="password"
 				margin="none"
 				fullWidth
-				//required={true}
 			/>
 		),
 	},
@@ -83,7 +78,7 @@ export class Login extends React.Component {
 	};
 	handleSubmit = (values) => {
 		const { logIn } = this.props;
-		console.log("values ", values);
+		
 		logIn({ email: values.email, password: values.password });
 	};
 	render() {
@@ -143,10 +138,9 @@ export class Login extends React.Component {
 
 													{this.props.error && (
 														<Box mt={2}>
-															{/* <Typography color="error" variant="body2">
+															<Typography color="error" variant="body2">
 																{this.props.error}
-															</Typography> */}
-															<Alert severity="error">{this.props.error}</Alert>
+															</Typography>
 														</Box>
 													)}
 													{this.props.isLoading ? (
